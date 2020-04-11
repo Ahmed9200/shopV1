@@ -1,0 +1,48 @@
+#bar .menu-item .label {
+    -fx-text-fill: black;
+    -fx-font-size:16;
+}
+
+#bar .menu-item:focused {
+    -fx-background-color: #299E59;
+}
+
+#bar .menu-item:focused .label {
+    -fx-text-fill: blue;
+    -fx-font-size:18;
+}
+
+.context-menu {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
+    -fx-background-color: whitesmoke;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
+}
+
+#bar .label{
+    -fx-font-size:19;
+}
+#Buttons .button{
+    -fx-min-width:193;
+    -fx-min-height:60;
+    -fx-font-size:18;
+    -fx-background-color: #E5E9FF;
+    -fx-text-fill:#000000;
+}
+#tittle {
+    -fx-min-width: 400;
+    -fx-font-size: 25pt;
+    -fx-alignment:CENTER;
+    -fx-background-color: #fff;
+    -fx-padding: 20 20 20 10;
+    -fx-background-radius: 30;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 3 );
+
+}
+#labelBox {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
+}
