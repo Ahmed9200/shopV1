@@ -44,6 +44,9 @@ public class Home extends Application {
     public Button stock, home, installment, addItem, sellItem, clients, exit, barcode, inventory, outMoney;
     public StackPane sPane;
 
+    public static Label priceNo = new Label("0");
+    public static Label userAccount = new Label();
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -71,7 +74,6 @@ public class Home extends Application {
             scrollCenter.setContent(right);
             HBox c = new HBox(scrollCenter);
             root.setCenter(scrollCenter);
-            
 
         });
 
@@ -393,14 +395,22 @@ public class Home extends Application {
 
         topMenuBar.getMenus().addAll(mainDataMenu, itemsMenu, cashMenu, settingsMenu);
 
-        Label billsNo_lbl = new Label();
         Label billsPrice_lbl = new Label();
 
-        HBox box = new HBox(30, billsNo_lbl, billsPrice_lbl);
-        box.setAlignment(Pos.CENTER);
+        VBox box2 = new VBox(5, billsPrice_lbl, priceNo);
+        box2.setAlignment(Pos.CENTER);
 
-        box.setId("labelBox");
-        TitledPane details = new TitledPane("تفاصيل", box);
+        HBox r = new HBox(30, box2);
+        HBox userBox = new HBox(userAccount);
+        userAccount.setStyle("-fx-font-size:18;-fx-text-fill: red;");
+        priceNo.setStyle("-fx-font-size:18;-fx-text-fill: blue;");
+        userBox.setAlignment(Pos.CENTER);
+        HBox topRoot = new HBox(50, userBox, r);
+        topRoot.setAlignment(Pos.CENTER);
+
+        box2.setId("labelBox");
+
+        TitledPane details = new TitledPane("تفاصيل", topRoot);
         details.setExpanded(false);
         details.expandedProperty().addListener((observable) -> {
             try {
@@ -419,23 +429,8 @@ public class Home extends Application {
             }
         });
         details.setOnMouseClicked((MouseEvent event) -> {
-
-            SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
-
-            Date dt = new Date();
-            Calendar c = Calendar.getInstance();
-            c.setTime(dt);
-            c.add(Calendar.DATE, 1);
-            dt = c.getTime();
-
-            Date date = new Date();
-            String d = sdf.format(date);
-            int day = date.getDay();
-
-            billsNo_lbl.setText("عدد الفواتير حتى الان" + "\n"
-                    + Database.database.getTableData("SELECT count(paid) from invoice where date between '" + d + "'  and '" + sdf.format(dt) + "';").items[0][0]);
-            billsPrice_lbl.setText("المبلغ من الفواتير حتى الان"
-                    + "\n" + Database.database.getTableData("SELECT sum(paid) from invoice where date between '" + d + "'  and '" + sdf.format(dt) + "';").items[0][0]);
+            billsPrice_lbl.setText("المبلغ من الفواتير حتى الان");
+            userAccount.setText(Designs.FXMLDocumentController.userId);
         });
 
         top = new VBox(10, topMenuBar, new TitledPane("اختصارات", buttonsTopScroll), details);
@@ -450,7 +445,6 @@ public class Home extends Application {
 
         root.setTop(top);
         root.setId("right");
-        hasPrivligis("");
         Scene scene = new Scene(root, psb.getWidth(), psb.getHeight());
         scene.getStylesheets().add(this.getClass().getResource("/styleSheet/HomeCSS.css").toExternalForm());
 

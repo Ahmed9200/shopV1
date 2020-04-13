@@ -132,6 +132,7 @@ public class inventory {
                     this.setTf8();
                     this.setTf9(start.getValue() + " " + start_spinner.getEditor().getText(), end.getValue() + " " + end_spinner.getEditor().getText());
                     this.setTf10();
+                    setTotalOfRemainder();
                     one2.setExpanded(true);
                 } else {
                     tools.ErrorBox("من فضلك قم بادخال التاريخ");

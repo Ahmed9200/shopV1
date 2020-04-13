@@ -5,6 +5,7 @@
 package Designs.cashTransaction;
 
 import Database.database;
+import Designs.Home;
 import Tools.tools;
 import Tools.tools.table;
 import entities.cash.bills;
@@ -75,7 +76,7 @@ public class bill {
     Label totalAfterLabel;
     Label numberLabel;
     Label totalBefore;
-    Label totalAfter;
+    static Label totalAfter;
     Label number;
     public static ComboBox customer;
     public static TextField discount;
@@ -201,6 +202,7 @@ public class bill {
                     if (tools.confirmMsg("هل تريد طباعه الفاتوره")) {
                         this.print();
                     }
+                    addMoneyToTop();
                     this.clear();
                     discount.setText("0.0");
                 }
@@ -531,8 +533,14 @@ public class bill {
 
     }
 
-    void setTotalToMain() {
+    public static void addMoneyToTop() {
+        try {
+            double price = Double.parseDouble(Home.priceNo.getText());
 
+            Home.priceNo.setText((price + Double.parseDouble(totalAfter.getText())) + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void removeSelectedRows() {

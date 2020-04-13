@@ -5,6 +5,7 @@
 package Designs.cashTransaction;
 
 import Database.database;
+import Designs.Home;
 import Tools.tools;
 import entities.cash.bills;
 import entities.cash.soldItems;
@@ -332,6 +333,13 @@ public class allBills {
         database.excuteQuery("UPDATE items SET quantity=quantity+" + quantity + " WHERE barcode='" + barcode + "';");
     }
 
+    public static void addMoneyToTop(String p) {
+        try {
+            Home.priceNo.setText(p);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     void deleteItem(String discount, String barcode, String quantity, String price, String soldQuantity, String b_id) {
         this.bigUnit(barcode, quantity);
@@ -355,6 +363,8 @@ public class allBills {
         }
 
         this.setItemsTableData(b_id);
+        double top_price = Double.parseDouble(Home.priceNo.getText());
+        addMoneyToTop((top_price - p) + "");
     }
 
     private double setTotalBeforeDiscount(String q, String p, String b_id) {
@@ -451,7 +461,9 @@ public class allBills {
     }
 
     public void clear() {
-        Database.database.excuteQuery("delete FROM invoice where totalAfterDiscount <= 0 and remainder<=0 and paid <=0;");
+        Database.database.excuteQuery("delete FROM invoice where totalAfterDiscount <= 0;");
+        Database.database.excuteQuery("delete FROM invoice where remainder<0;");
+        Database.database.excuteQuery("delete FROM invoice where paid <0;");
         Database.database.excuteQuery("delete FROM solditems where soldQuantity <= 0;");
     }
 }
